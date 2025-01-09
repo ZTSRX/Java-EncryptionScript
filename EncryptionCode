@@ -1,0 +1,303 @@
+import java.util.Scanner;
+import java.util.ArrayList;
+
+public class ZadanieChar {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Podaj działanie (1 - szyfruj kod 1337, 2 - deszyfruj kod 1337, 3 - Szyfr zamienny, 4 - Deszyfruj Zamienny, 5 - Szyfruj Cezar, 6 - Deszyfruj Cezar, 7 - Szyfruj Kolumny, 8 - Deszyfruj Kolumny: ");
+        int number = scanner.nextInt();
+        scanner.nextLine();
+
+        if (number == 1) {
+            szyfruj1337();
+        } else if (number == 2) {
+            deszyfruj1337();
+        } else if (number == 3) {
+            szyfrujZamien();
+        } else if (number == 4) {
+            deszyfrujZamien();
+        } else if (number == 5) {
+            szyfrcezar();
+        } else if (number == 6) {
+            deszyfrucjcezar();
+        } else if (number == 7) {
+            System.out.print("Podaj tekst do zaszyfrowania: ");
+            String tekst = scanner.nextLine();
+            System.out.print("Podaj liczbę kolumn: ");
+            int liczbaKolumn = scanner.nextInt();
+            String zaszyfrowany = szyfrujKolumny(tekst, liczbaKolumn);
+            System.out.println("Zaszyfrowany tekst: " + zaszyfrowany);
+        } else if (number == 8) {
+            System.out.print("Podaj tekst do odszyfrowania: ");
+            String tekst = scanner.nextLine();
+            System.out.print("Podaj liczbę kolumn: ");
+            int liczbaKolumn = scanner.nextInt();
+            String odszyfrowany = deszyfrujKolumny(tekst, liczbaKolumn);
+            System.out.println("Odszyfrowany tekst: " + odszyfrowany);
+        } else {
+            System.out.print("Nie ma takiej możliwości.");
+        }
+        {
+        }
+
+        scanner.close();
+    }
+
+
+    private static void szyfruj1337() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Wpisz wyraz: ");
+        String word = scanner.nextLine();
+
+        StringBuilder encrypted = new StringBuilder();
+        for (char wyraz : word.toCharArray()) {
+            encrypted.append((int) wyraz).append(" ");
+        }
+
+        System.out.println("Zaszyfrowany wyraz: " + encrypted.toString().trim());
+
+    }
+
+    private static void deszyfruj1337() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Wpisz zaszyfrowane wyraz: ");
+        String encrypted = scanner.nextLine();
+
+        String[] numbers = encrypted.split(" ");
+        StringBuilder decrypted = new StringBuilder();
+
+        for (String number : numbers) {
+            decrypted.append((char) Integer.parseInt(number));
+        }
+
+        System.out.println("Odszyfrowany wyraz: " + decrypted);
+    }
+
+    private static void szyfrujZamien() {
+        ArrayList<String> lista = new ArrayList<>();
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Podaj wyraz: ");
+        String wyraz = scanner.nextLine();
+        lista.add(wyraz);
+
+        String[] tablica = lista.toArray(new String[0]);
+
+        System.out.println("\nWprowadzone wyrazy:");
+        for (String w : tablica) {
+            System.out.println(w);
+        }
+
+        for (String w : tablica) {
+            String zaszyfrowane = zaszyfrujdozmienne(w);
+            System.out.println("Zaszyfrowany wyraz: " + zaszyfrowane);
+        }
+    }
+
+    private static void deszyfrujZamien() {
+        ArrayList<String> lista = new ArrayList<>();
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Podaj wyraz: ");
+        String wyraz = scanner.nextLine();
+        lista.add(wyraz);
+
+        String[] tablica = lista.toArray(new String[0]);
+
+        System.out.println("\nWprowadzone wyrazy:");
+        for (String w : tablica) {
+            System.out.println(w);
+        }
+        for (String w : tablica) {
+            String zaszyfrowane = deszyfrujdoZamien(w);
+            System.out.println("Zdeszyfrowany wyraz: " + zaszyfrowane);
+        }
+    }
+
+    private static String zaszyfrujdozmienne(String tekst) {
+        return tekst
+                .replace("A", "4").replace("a", "@")
+                .replace("B", "8").replace("b", "ß")
+                .replace("C", "<").replace("c", "{").replace("C", "}")
+                .replace("D", "|)").replace("d", "Ð")
+                .replace("E", "3").replace("e", "&")
+                .replace("F", "ph").replace("f", "ƒ")
+                .replace("G", "6").replace("g", "9")
+                .replace("H", "#").replace("h", "]-[")
+                .replace("I", "1").replace("i", "!")
+                .replace("J", "_|").replace("j", "¿")
+                .replace("K", "|<").replace("k", "<|")
+                .replace("L", "1").replace("l", "|_")
+                .replace("M", "/\\\\/\\\\").replace("m", "^^")
+                .replace("N", "/\\\\").replace("n", "~")
+                .replace("O", "0").replace("o", "[]")
+                .replace("P", "|>").replace("p", "|°")
+                .replace("Q", "0,").replace("q", "¶")
+                .replace("R", "|2").replace("r", "®")
+                .replace("S", "$").replace("s", "§")
+                .replace("T", "7").replace("t", "=")
+                .replace("U", "(_)").replace("u", "|_|").replace("U", "(*)")
+                .replace("V", "\\/").replace("v", "^")
+                .replace("W", "\\/\\/").replace("w", "VV")
+                .replace("X", "><").replace("x", "%")
+                .replace("Y", "`/").replace("y", "¥")
+                .replace("Z", "2").replace("z", "≥");
+
+    }
+
+    private static String deszyfrujdoZamien(String tekst) {
+        return tekst
+                .replace("4", "A").replace("@", "a")
+                .replace("8", "B").replace("ß", "b")
+                .replace("<", "C").replace("{", "c").replace("}", "c")
+                .replace("|)", "D").replace("Ð", "d")
+                .replace("3", "E").replace("&", "e")
+                .replace("ph", "F").replace("ƒ", "f")
+                .replace("6", "G").replace("9", "g")
+                .replace("#", "H").replace("]-[", "h")
+                .replace("1", "I").replace("!", "i")
+                .replace("_|", "J").replace("¿", "j")
+                .replace("|<", "K").replace("<|", "k")
+                .replace("1", "L").replace("|_", "l")
+                .replace("/\\\\/\\\\", "M").replace("^^", "m")
+                .replace("/\\\\", "N").replace("~", "n")
+                .replace("0", "O").replace("[]", "o")
+                .replace("|>", "P").replace("|°", "p")
+                .replace("0,", "Q").replace("¶", "q")
+                .replace("|2", "R").replace("®", "r")
+                .replace("$", "S").replace("§", "s")
+                .replace("7", "T").replace("=", "t")
+                .replace("(_)", "U").replace("|_|", "u").replace("(*)", "u")
+                .replace("\\/", "V").replace("^", "v")
+                .replace("\\/\\/", "W").replace("VV", "w")
+                .replace("><", "X").replace("%", "x")
+                .replace("`/", "Y").replace("¥", "y")
+                .replace("2", "Z").replace("≥", "z");
+    }
+
+    private static void szyfrcezar() {
+        ArrayList<String> lista = new ArrayList<>();
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Podaj wyraz: ");
+        String Cezarslowo = scanner.nextLine();
+        lista.add(Cezarslowo);
+
+        String[] Cezartablica = lista.toArray(new String[0]);
+
+        System.out.println("\nWprowadzone wyrazy:");
+        for (String w : Cezartablica) {
+            System.out.println(w);
+        }
+
+        for (String w : Cezartablica) {
+            String cezar = zaszyfrujdocezar(w);
+            System.out.println("Zaszyfrowany wyraz: " + cezar);
+        }
+    }
+
+    private static void szyfrcezar(Scanner scanner) {
+        ArrayList<String> lista = new ArrayList<>();
+
+        System.out.print("Podaj wyraz: ");
+        String Cezarslowo = scanner.nextLine();
+        lista.add(Cezarslowo);
+
+        System.out.println("\nWprowadzone wyrazy:");
+        for (String w : lista) {
+            System.out.println(w);
+        }
+
+        for (String w : lista) {
+            String cezar = deszyfrucjdocezar(w);
+            System.out.println("Zaszyfrowany wyraz: " + cezar);
+        }
+    }
+
+    private static String zaszyfrujdocezar(String tekst) {
+        String wynik = "";
+
+        for (int i = 0; i < tekst.length(); i++) {
+            char znak = tekst.charAt(i);
+
+            if (Character.isLetter(znak)) {
+                char baza = Character.isUpperCase(znak) ? 'A' : 'a';
+                znak = (char) ((znak - baza + 3) % 26 + baza);
+            }
+
+            wynik += znak;
+        }
+
+        return wynik;
+    }
+
+    private static void deszyfrucjcezar() {
+        ArrayList<String> lista = new ArrayList<>();
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Podaj wyraz: ");
+        String Cezarslowo = scanner.nextLine();
+        lista.add(Cezarslowo);
+
+        System.out.println("\nWprowadzone wyrazy:");
+        for (String w : lista) {
+            System.out.println(w);
+        }
+
+        for (String w : lista) {
+            String deszufrcezar = deszyfrucjdocezar(w);
+            System.out.println("Zdeszyfrowany wyraz: " + deszufrcezar);
+        }
+
+    }
+
+    private static String deszyfrucjdocezar(String tekst) {
+        String wynik = "";
+
+        for (int i = 0; i < tekst.length(); i++) {
+            char Deznak = tekst.charAt(i);
+
+            if (Character.isLetter(Deznak)) {
+                char baza = Character.isUpperCase(Deznak) ? 'A' : 'a';
+                Deznak = (char) ((Deznak - baza - 3) % 26 + baza);
+            }
+
+            wynik += Deznak;
+        }
+
+        return wynik;
+    }
+    public static String szyfrujKolumny(String tekst, int liczbaKolumn) {
+        StringBuilder zaszyfrowany = new StringBuilder();
+
+        for (int kolumna = 0; kolumna < liczbaKolumn; kolumna++) {
+            for (int i = kolumna; i < tekst.length(); i += liczbaKolumn) {
+                zaszyfrowany.append(tekst.charAt(i));
+            }
+        }
+        return zaszyfrowany.toString();
+    }
+
+    public static String deszyfrujKolumny(String tekst, int liczbaKolumn) {
+        int liczbaWierszy = (int) Math.ceil((double) tekst.length() / liczbaKolumn);
+        char[][] tablica = new char[liczbaWierszy][liczbaKolumn];
+        int index = 0;
+
+        for (int kolumna = 0; kolumna < liczbaKolumn; kolumna++) {
+            for (int wiersz = 0; wiersz < liczbaWierszy; wiersz++) {
+                if (index < tekst.length()) {
+                    tablica[wiersz][kolumna] = tekst.charAt(index++);
+                } else {
+                    tablica[wiersz][kolumna] = ' ';
+                }
+            }
+        }
+
+        StringBuilder odszyfrowany = new StringBuilder();
+        for (int wiersz = 0; wiersz < liczbaWierszy; wiersz++) {
+            for (int kolumna = 0; kolumna < liczbaKolumn; kolumna++) {
+                if (tablica[wiersz][kolumna] != ' ') {
+                    odszyfrowany.append(tablica[wiersz][kolumna]);
+                }
+            }
+        }
+
+        return odszyfrowany.toString();
+    }
+}
